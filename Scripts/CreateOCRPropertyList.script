@@ -1,0 +1,46 @@
+﻿put {
+	agressivetextextraction: myAggressiveTextExtractionYN,
+	contrast: myContrastYN,
+	contrastColor: myContrastColorValue,
+	contrasttolerance: myContrastTolerance,
+	dpi: myDPI_Number,
+	enhancelocalcontrast: myEnhanceLocalContrastYN,
+	extrawords: myExtraWordsValues,
+	invertimage: myInvertImageYN,
+	language: myLanguageValues,
+	lowresolutionmode: myLowResolutionModeYN,
+	multiline: myMultiLineYN,
+	preferdictionarywords: myPreferDictionaryWordsYN,
+	preferredPattern: myPreferredPatternValue,
+	preferredwords: myPreferredWordsValue,
+	prohibitedwords: myProhibitedWordsValue,
+	textrotation: myTextRotationValue,
+	trim: myTrimYN,
+	trimborder: myTrimBorderNumber,
+	trimcolor: myTrimColorValue,
+	trimtolerance: myTrimToleranceNumber,
+	trimwhitespace: myTrimWhitespaceYN,
+	validcharacters: myValidCharactersValue,
+	validpattern: myValidPatternValue,
+	validwords: myValidWordsValue
+} into myOCR_PropertiesList
+
+repeat with each myCurrentProperty in the keys of myOCR_PropertiesList
+	put myOCR_PropertiesList.(myCurrentProperty)
+	Ask "What value do you want for this property" title myCurrentProperty
+	put IT into myOCR_PropertiesList.(myCurrentProperty)
+	put myOCR_PropertiesList.(myCurrentProperty)
+end repeat
+
+put {genericproperty:"generic value"} into myFinalOCR_PropertiesList
+
+repeat with each myCurrentProperty in the keys of myOCR_PropertiesList
+	put myOCR_PropertiesList.(myCurrentProperty)
+	if myOCR_PropertiesList.(myCurrentProperty) is not empty then
+		add properties {(myCurrentProperty):(myOCR_PropertiesList.(myCurrentProperty))} to myFinalOCR_PropertiesList
+	end if
+end repeat
+
+remove properties {genericproperty:"generic value"} from myFinalOCR_PropertiesList
+
+return myFinalOCR_PropertiesList

@@ -1,0 +1,14 @@
+﻿//This handler expects that the log file name has already been stored in the global CustomLogFile
+to htmlLog type, message, myFileWithPath
+	
+	put !"<p><span class=[[type]]>[[message]]</span></p>[[newline]]" after file (myFileWithPath)
+	
+end htmlLog
+
+//This handler expects that the log file name has already been stored in the global CustomLogFile and charts will be saved in the ResourcePath()
+to htmlImage myImageFilePath, myFileWithPath
+	
+	If myLogoFilePath = "none" then Exit handler
+	put !"<div><img src= [[myImageFilePath]]  class=[[quote]]image[[quote]]></div>[[newline]]" after file (myFileWithPath)
+	
+end htmlImage

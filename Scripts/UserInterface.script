@@ -1,0 +1,39 @@
+﻿//This is the script to run.
+
+Answer "Would you like the simple example or the advanced example" with "Simple" or "Advanced" title "Choose your OCR challenge"
+
+If IT equals "Simple" then
+	put (12,199,337,258) into myDefaultSearchArea
+	Connect "TutorialSUT"
+Else
+	put (455,128,895,290) into myDefaultSearchArea
+	Connect ResourcePath("OCR_Advanced_Test1.png")
+End If
+
+put ResourcePath("OCR_Captures") into myFilePath
+
+(*put "none" into myTextRotationValue
+
+put "" into myLanguageValues*)
+
+put ReadText(myDefaultSearchArea) into myRecognizedTextByDefault
+
+put formattedTime(yyyyddMM_HHmmss,now) into myCurrentTime
+put !"[[myFilePath]]/MyCapture_[[myCurrentTime]].png" into myCaptureFilePath
+put !"[[quote]][[myFilePath]]/MyOCR_Image_[[myCurrentTime]].png[[quote]]" into myImageFilePath
+put !"[[myFilePath]]/MyWebpage_[[myCurrentTime]].html" into myWebpageFilePath
+put !"put ReadText([[myDefaultSearchArea]],[[CreateOCRPropertyList()]], saveimagefile:[[myImageFilePath]]) into myRecognizedText" into myReadTextProperties
+delete "{" from myReadTextProperties
+delete "}" from myReadTextProperties
+do myReadTextProperties
+delete "put ReadText(" from myReadTextProperties
+delete " into myRecognizedText" from myReadTextProperties
+delete ")" from myReadTextProperties
+split myReadTextProperties by comma
+delete the first 4 items of myReadTextProperties
+
+CaptureScreen (Name: myCaptureFilePath, Rectangle: myDefaultSearchArea)
+
+run GenerateReportAsWebpage, myCaptureFilePath, myImageFilePath, myWebpageFilePath, myDefaultSearchArea, myReadTextProperties, myRecognizedText, myRecognizedTextByDefault
+
+
