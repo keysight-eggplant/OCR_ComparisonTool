@@ -1,5 +1,5 @@
 ﻿put {
-	agressivetextextraction: myAggressiveTextExtractionYN,
+	aggressivetextextraction: myAggressiveTextExtractionYN,
 	contrast: myContrastYN,
 	contrastColor: myContrastColorValue,
 	contrasttolerance: myContrastTolerance,
