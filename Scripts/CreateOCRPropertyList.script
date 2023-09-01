@@ -25,7 +25,14 @@
 	validwords: myValidWordsValue
 } into myOCR_PropertiesList
 
+put the keys of myOCR_PropertiesList into myOCR_PropertiesPickList
+
+Answer multiple "Which OCR Properties would you like to test?" from list (myOCR_PropertiesPickList)
+
+Put IT into myChosenProperties
+
 repeat with each myCurrentProperty in the keys of myOCR_PropertiesList
+	if myChosenProperties does not contain myCurrentProperty then Next Repeat
 	put myOCR_PropertiesList.(myCurrentProperty)
 	Ask "What value do you want for this property" title myCurrentProperty
 	put IT into myOCR_PropertiesList.(myCurrentProperty)
@@ -35,6 +42,7 @@ end repeat
 put {genericproperty:"generic value"} into myFinalOCR_PropertiesList
 
 repeat with each myCurrentProperty in the keys of myOCR_PropertiesList
+	if myChosenProperties does not contain myCurrentProperty then Next Repeat
 	put myOCR_PropertiesList.(myCurrentProperty)
 	if myOCR_PropertiesList.(myCurrentProperty) is not empty then
 		add properties {(myCurrentProperty):(myOCR_PropertiesList.(myCurrentProperty))} to myFinalOCR_PropertiesList

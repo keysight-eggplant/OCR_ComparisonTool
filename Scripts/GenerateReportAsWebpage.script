@@ -65,6 +65,13 @@ Run handlers.htmlLog "reportname", ("Reading from:" && myDefaultSearchArea), myW
 Run handlers.htmlLog "reportname", ("Text Recognized (default settings):" && myRecognizedTextByDefault), myWebpageFilePath
 Run handlers.htmlLog "reportname", ("Text Recognized (selected settings):" && myRecognizedText), myWebpageFilePath
 Repeat with each item myCurrentProperty of myReadTextProperties
+	If myCurrentProperty contains "saveimagefile" then
+		delete "saveimagefile: " from myCurrentProperty
+		delete every the occurrence of quote in myCurrentProperty 
+		Run handlers.htmlLog "reportname", "Your image file:", myWebpageFilePath
+		Run handlers.htmlLink "reportname", trim(myImageFilePath,quote), myWebpageFilePath
+		Next Repeat
+	End If
 	Run handlers.htmlLog "reportname", trimStart(myCurrentProperty), myWebpageFilePath
 End Repeat
 

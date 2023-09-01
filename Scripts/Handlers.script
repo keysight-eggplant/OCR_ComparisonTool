@@ -12,3 +12,9 @@ to htmlImage myImageFilePath, myFileWithPath
 	put !"<div><img src= [[myImageFilePath]]  class=[[quote]]image[[quote]]></div>[[newline]]" after file (myFileWithPath)
 	
 end htmlImage
+
+to htmlLink type, message, myFileWithPath
+	
+	put !"<p><span class=[[type]]><a href=[[quote]][[message]][[quote]]>[[message]]</a></span></p>[[newline]]" after file (myFileWithPath)
+	
+end htmlLink

@@ -1,14 +1,27 @@
 ﻿//This is the script to run.
 
-Answer "Would you like the simple example or the advanced example" with "Simple" or "Advanced" title "Choose your OCR challenge"
+Answer "Would you like the simple or the advanced or the custom example?" with "Simple" or "Advanced" or "Custom" title "Choose your OCR challenge"
 
-If IT equals "Simple" then
-	put (12,199,337,258) into myDefaultSearchArea
-	Connect "TutorialSUT"
-Else
-	put (455,128,895,290) into myDefaultSearchArea
-	Connect ResourcePath("OCR_Advanced_Test1.png")
-End If
+//Simple 
+If IT = ...
+	... "Simple" :
+		put (12,199,337,258) into myDefaultSearchArea
+		Connect "TutorialSUT"
+	... "Advanced" :
+		put (455,128,895,290) into myDefaultSearchArea
+		Connect ResourcePath("OCR_Advanced_Test1.png")
+	... "Custom" :
+		Ask "What is your search area?"  title "Search Area" message "Add coordinates here without parentheses"
+		if IT is empty then
+			put RemoteScreenRectangle() into myDefaultSearchArea
+		else
+			put IT into myDefaultSearchArea
+		end if
+		
+	... Else
+		
+End if
+
 
 put ResourcePath("OCR_Captures") into myFilePath
 
@@ -16,6 +29,7 @@ put ResourcePath("OCR_Captures") into myFilePath
 
 put "" into myLanguageValues*)
 
+put ReadText(RemoteScreenRectangle()) into myRecognizedTextByDefault
 put ReadText(myDefaultSearchArea) into myRecognizedTextByDefault
 
 put formattedTime(yyyyddMM_HHmmss,now) into myCurrentTime
